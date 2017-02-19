@@ -8,9 +8,11 @@ public class Ball : MonoBehaviour {
     private bool hasStarted = false;
 
     private Vector3 paddleToBallVector;
+    public AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
+        audio = GetComponent<AudioSource>();
         paddle = GameObject.FindObjectOfType<Paddle>();
 	    paddleToBallVector = this.transform.position - paddle.transform.position;	
 	}
@@ -26,4 +28,9 @@ public class Ball : MonoBehaviour {
         }
         }
 	}
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        if(hasStarted)
+            audio.Play();
+    }
 }
