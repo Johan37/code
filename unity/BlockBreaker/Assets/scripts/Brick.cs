@@ -8,19 +8,27 @@ public class Brick : MonoBehaviour {
     private int timesHit;
     private LevelManager levelManager;
 
+    public static int breakableCount = 0;
+    private bool isBreakable;
+
 	// Use this for initialization
 	void Start () {
+        isBreakable = (this.tag == "Breakable");
+        // Keep track of breakable bricks
+        if (isBreakable) {
+            breakableCount++;
+        }
+
 		timesHit= 0;
         levelManager = GameObject.FindObjectOfType<LevelManager>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		
+        
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
-        bool isBreakable = (this.tag == "Breakable");
         if (isBreakable) {
             HandleHits();
         }
@@ -30,6 +38,9 @@ public class Brick : MonoBehaviour {
         timesHit++;
         int maxHit = hitSprites.Length + 1;
         if (timesHit >= maxHit ) {
+            print(breakableCount);
+            breakableCount--;
+            levelManager.BrickDestroyed();
             Destroy(gameObject);
         } 
         else {
