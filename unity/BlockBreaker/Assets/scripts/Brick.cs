@@ -5,6 +5,7 @@ using UnityEngine;
 public class Brick : MonoBehaviour {
     public Sprite[] hitSprites;
     public AudioClip crack;
+    public GameObject smoke;
 
     private int timesHit;
     private LevelManager levelManager;
@@ -22,6 +23,7 @@ public class Brick : MonoBehaviour {
 
 		timesHit= 0;
         levelManager = GameObject.FindObjectOfType<LevelManager>();
+
 	}
 
 	// Update is called once per frame
@@ -40,8 +42,11 @@ public class Brick : MonoBehaviour {
         timesHit++;
         int maxHit = hitSprites.Length + 1;
         if (timesHit >= maxHit ) {
-            print(breakableCount);
             breakableCount--;
+            GameObject smokePuff = Instantiate(smoke, transform.position,
+                    Quaternion.identity);
+            smokePuff.GetComponent<ParticleSystem>().startColor = 
+                gameObject.GetComponent<SpriteRenderer>().color;
             levelManager.BrickDestroyed();
             Destroy(gameObject);
         } 
