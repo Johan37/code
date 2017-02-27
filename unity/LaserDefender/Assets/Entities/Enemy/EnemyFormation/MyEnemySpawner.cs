@@ -14,6 +14,8 @@ public class MyEnemySpawner : MonoBehaviour {
     float xmin;
     float xmax;
 
+    bool movingRight = true;
+
 	// Use this for initialization
 	void Start () {
         foreach (Transform child in transform) {
@@ -35,12 +37,19 @@ public class MyEnemySpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position += new Vector3(speed * Time.deltaTime, 0 ,0);
+        if (movingRight) {
+            transform.position += new Vector3(speed * Time.deltaTime, 0 ,0);
+        } else {
+            transform.position += new Vector3( -1 * speed * Time.deltaTime, 0 ,0);
+        }
 
         float rightEdgeOfFormation = transform.position.x - 0.5f * formationWidth; 
         float leftEdgeOfFormation = transform.position.x + 0.5f * formationWidth; 
-        if (leftEdgeOfFormation <= xmin || rightEdgeOfFormation >= xmax ) {
-            speed = speed * -1;
+        if (leftEdgeOfFormation <= xmin ) {
+            movingRight = true;
+        }   
+        else if (rightEdgeOfFormation >= xmax ) {
+            movingRight = false;
         }
 
 	}
