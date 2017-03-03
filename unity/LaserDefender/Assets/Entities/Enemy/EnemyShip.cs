@@ -5,6 +5,9 @@ using UnityEngine;
 public class EnemyShip : MonoBehaviour {
 
     public float health = 200f;
+    public GameObject projectile;
+    public float projectileSpeed;
+    public float fireRate;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +28,11 @@ public class EnemyShip : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        InvokeRepeating("Fire", 0.0000001f, fireRate);
+    }
+
+    void Fire() {
+        GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
+        beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed, 0);
+    }
 }
