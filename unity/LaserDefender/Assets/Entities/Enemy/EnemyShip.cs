@@ -32,7 +32,8 @@ public class EnemyShip : MonoBehaviour {
     }
 
     void Fire() {
-        GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
-        beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed, 0);
+        Vector3 startPos = transform.position + new Vector3(0,-1, 0);
+        GameObject beam = Instantiate(projectile, startPos, Quaternion.identity) as GameObject;
+        beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -projectileSpeed, 0);
     }
 }
