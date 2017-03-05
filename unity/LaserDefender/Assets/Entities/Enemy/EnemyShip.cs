@@ -12,6 +12,7 @@ public class EnemyShip : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
+        InvokeRepeating("Fire", 0.0000001f, fireRate);
 	}
 
     void OnTriggerEnter2D(Collider2D col) {
@@ -28,7 +29,6 @@ public class EnemyShip : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        InvokeRepeating("Fire", 0.0000001f, fireRate);
     }
 
     void Fire() {
