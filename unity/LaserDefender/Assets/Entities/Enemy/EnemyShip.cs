@@ -29,6 +29,10 @@ public class EnemyShip : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        float probability = Time.deltaTime * fireRate;
+        if (Random.value < probability) {
+            Fire();
+        }
     }
 
     void Fire() {
