@@ -18,18 +18,22 @@ public class MyEnemySpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        foreach (Transform child in transform) {
-            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject; 
-            enemy.transform.parent = child;
-        }
-
         // Calculating world boundries
         float distance = transform.position.z - Camera.main.transform.position.z;
     	Vector3 leftmost = Camera.main.ViewportToWorldPoint(new Vector3(0,0 ,distance));
     	Vector3 rightmost = Camera.main.ViewportToWorldPoint(new Vector3(1,0 ,distance));
         xmin = leftmost.x + padding;
         xmax = rightmost.x - padding;
+
+        // Spawn Enemies
 	}
+
+    public void SpawnFormation() {
+        foreach (Transform child in transform) {
+            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject; 
+            enemy.transform.parent = child;
+        }
+    }
 
     public void OnDrawGizmos() {
         Gizmos.DrawWireCube(transform.position, new Vector3(formationWidth, formationHeight, 0));
@@ -52,5 +56,18 @@ public class MyEnemySpawner : MonoBehaviour {
             movingRight = false;
         }
 
+        if (AllMembersDead()) {
+            Debug.Log("Empty Formation");
+            SpawnFormation();
+        }
 	}
+
+    bool AllMembersDead() {
+        foreach(Transform childPositionGameObject in transform) {
+            if (childPositionGameObject.childCount > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
