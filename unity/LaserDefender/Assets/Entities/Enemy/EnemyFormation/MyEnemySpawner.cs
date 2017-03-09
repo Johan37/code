@@ -16,6 +16,8 @@ public class MyEnemySpawner : MonoBehaviour {
 
     bool movingRight = true;
 
+    public float spawnDelay=0.5f;
+
 	// Use this for initialization
 	void Start () {
         // Calculating world boundries
@@ -32,6 +34,17 @@ public class MyEnemySpawner : MonoBehaviour {
         foreach (Transform child in transform) {
             GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject; 
             enemy.transform.parent = child;
+        }
+    }
+
+    public void SpawnUntilFull() {
+        Transform freePosition = NextFreePosition();
+        if (freePosition) {
+            GameObject enemy = Instantiate(enemyPrefab, freePosition.position, Quaternion.identity) as GameObject; 
+            enemy.transform.parent = freePosition;
+        }
+        if (NextFreePosition()) {
+            Invoke("SpawnUntilFull", spawnDelay);
         }
     }
 
@@ -58,9 +71,18 @@ public class MyEnemySpawner : MonoBehaviour {
 
         if (AllMembersDead()) {
             Debug.Log("Empty Formation");
-            SpawnFormation();
+            SpawnUntilFull();
         }
 	}
+
+    Transform NextFreePosition() {
+        foreach(Transform childPositionGameObject in transform) {
+            if (childPositionGameObject.childCount == 0) {
+                return childPositionGameObject;
+            }
+        }
+        return null;
+    }
 
     bool AllMembersDead() {
         foreach(Transform childPositionGameObject in transform) {
