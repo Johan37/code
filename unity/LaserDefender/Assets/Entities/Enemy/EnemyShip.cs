@@ -9,10 +9,12 @@ public class EnemyShip : MonoBehaviour {
     public float projectileSpeed;
     public float fireRate;
 
+    public int scoreValue =150;
+    private ScoreKeeper scoreKeeper;
+
 	// Use this for initialization
 	void Start () {
-		
-        InvokeRepeating("Fire", 0.0000001f, fireRate);
+		scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();
 	}
 
     void OnTriggerEnter2D(Collider2D col) {
@@ -23,6 +25,7 @@ public class EnemyShip : MonoBehaviour {
             missile.Hit();
             if (health <= 0) {
                 Destroy(gameObject);
+                scoreKeeper.Score(scoreValue);
             }
         }
     }
