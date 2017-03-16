@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
     public float fireRate;
     public float health = 200f;
 
+    public AudioClip fireSound;
+
     float xmin;
     float xmax;
 
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 startPos = transform.position + new Vector3(0, 0.4f, 0);
         GameObject beam = Instantiate(projectile, startPos, Quaternion.identity) as GameObject;
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed, 0);
+        AudioSource.PlayClipAtPoint(fireSound, transform.position);
     }
 
 	// Update is called once per frame

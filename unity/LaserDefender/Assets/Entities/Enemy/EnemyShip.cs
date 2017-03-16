@@ -9,6 +9,9 @@ public class EnemyShip : MonoBehaviour {
     public float projectileSpeed;
     public float fireRate;
 
+    public AudioClip fireSound;
+    public AudioClip deathSound;
+
     public int scoreValue =150;
     private ScoreKeeper scoreKeeper;
 
@@ -24,8 +27,7 @@ public class EnemyShip : MonoBehaviour {
             health -= missile.GetDamage();
             missile.Hit();
             if (health <= 0) {
-                Destroy(gameObject);
-                scoreKeeper.Score(scoreValue);
+                Die();
             }
         }
     }
@@ -39,8 +41,14 @@ public class EnemyShip : MonoBehaviour {
     }
 
     void Fire() {
-        Vector3 startPos = transform.position + new Vector3(0,-1, 0);
-        GameObject beam = Instantiate(projectile, startPos, Quaternion.identity) as GameObject;
+        GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -projectileSpeed, 0);
+        AudioSource.PlayClipAtPoint(fireSound, transform.position);
+    }
+
+    void Die() {
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        scoreKeeper.Score(scoreValue);
+        Destroy(gameObject);
     }
 }
