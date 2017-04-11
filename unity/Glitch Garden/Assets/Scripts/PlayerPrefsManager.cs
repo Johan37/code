@@ -40,4 +40,17 @@ public class PlayerPrefsManager : MonoBehaviour {
             return false;
         }
     }
+
+    public static void SetDifficulty(float diff) {
+        if (diff >= 0f) {
+            PlayerPrefs.SetFloat(DIFFICULTY_KEY, diff);
+        }
+        else {
+            Debug.LogError("Difficulty below zero makes no sence: " + diff);
+        }
+    }
+
+    public static float GetDifficulty() {
+        return PlayerPrefs.GetFloat(DIFFICULTY_KEY);
+    }
 }
