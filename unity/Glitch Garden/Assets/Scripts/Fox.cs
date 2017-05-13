@@ -13,4 +13,13 @@ public class Fox : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnTriggerEnter2D(Collider2D collider) {
+        GameObject obj = collider.gameObject;
+        if(!obj.GetComponent<Defender>()) {
+            return;
+        }
+
+
+    }
 }
