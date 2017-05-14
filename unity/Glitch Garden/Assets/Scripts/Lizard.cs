@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Attacker))]
 public class Lizard : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private Animator anim;
+    private Attacker attacker;
+
+    void Start() {
+        anim = GetComponent<Animator>();
+        attacker = GetComponent<Attacker>();
+    }
+
+    void Update() {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider) {
+        GameObject obj = collider.gameObject;
+        if (!obj.GetComponent<Defender>()) {
+            return;
+        }
+
+        anim.SetBool("isAttacking", true);
+        attacker.Attack(obj);
+    }
 }
