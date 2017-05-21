@@ -15,4 +15,12 @@ public class Projectile : MonoBehaviour {
         transform.Translate(Vector3.right * speed * Time.deltaTime);
 	}
 
+    private void OnTriggerEnter2D(Collider2D collision) {
+        Attacker attacker = collision.gameObject.GetComponent<Attacker>();
+        Health health = collision.gameObject.GetComponent<Health>();
+        if ( health && attacker) {
+            health.DealDamage(damage);
+            Destroy(gameObject);
+        }
+    }
 }
