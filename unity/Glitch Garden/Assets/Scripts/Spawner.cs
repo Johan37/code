@@ -10,9 +10,7 @@ public class Spawner : MonoBehaviour {
     }
 	
 	void Update () {
-        Debug.Log("Update");
         foreach ( GameObject thisAttacker in attackerPrefabArray) {
-            Debug.Log("Loop");
             if (isTimeToSpawn( thisAttacker)) {
                 Spawn(thisAttacker);
             }
@@ -38,7 +36,6 @@ public class Spawner : MonoBehaviour {
     }
 
     private void Spawn(GameObject prefab) {
-        Debug.Log("Spawn");
         GameObject myGameObject = Instantiate(prefab) as GameObject;
         myGameObject.transform.position = transform.position;
         myGameObject.transform.parent = transform;
