@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class DefenderSpawner : MonoBehaviour {
 
-    Camera myCamera;
-
+    private Camera myCamera;
     private GameObject defenderParent;
 
-	// Use this for initialization
 	void Start () {
         myCamera = FindObjectOfType<Camera>();
 
@@ -19,11 +17,6 @@ public class DefenderSpawner : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     private void OnMouseDown() {
         Vector2 pos = SnapToGrid(CalculateWorldPosition());
         GameObject newDefender = Instantiate(Button.selectedDefender, pos, Quaternion.identity);
