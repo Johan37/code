@@ -11,6 +11,9 @@ public class LoseColider : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        levelManager.LoadLevel("03b Lose");
+        Attacker attacker = collision.gameObject.GetComponent<Attacker>();
+        if (attacker) {
+            levelManager.LoadLevel("03b Lose");
+        }
     }
 }
