@@ -28,12 +28,21 @@ public class GameTimer : MonoBehaviour {
         slider.value = Time.timeSinceLevelLoad / levelSeconds;
         
         if (Time.timeSinceLevelLoad >= levelSeconds && !isEndOfLevel) {
+            // Handle win condition
             isEndOfLevel = true;
             audioSource.Play();
             winLabel.SetActive(true);
+            ClearPlaySpace();
             Invoke("LoadNextLevel", audioSource.clip.length);
         }
 	}
+
+    void ClearPlaySpace() {
+        GameObject[] taggedObjectArray = GameObject.FindGameObjectsWithTag("destroyOnWin");
+        foreach ( GameObject obj in taggedObjectArray) {
+            Destroy(obj);
+        }
+    }
 
     void LoadNextLevel() {
         levelManager.LoadNextLevel();
